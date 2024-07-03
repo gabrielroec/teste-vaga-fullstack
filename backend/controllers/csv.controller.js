@@ -1,13 +1,13 @@
 import csvFileData from "../models/csv.model.js";
 import fs from "fs";
-import csv from "csv-parser";
+import csvParser from "csv-parser";
 import path from "path";
 
 const parseCsv = (csvFilePath) => {
   const results = [];
   return new Promise((res, rej) => {
     fs.createReadStream(csvFilePath)
-      .pipe(csv())
+      .pipe(csvParser())
       .on("data", (data) => {
         results.push(data);
       })
@@ -40,7 +40,16 @@ const formateCsvFile = async (csvFilePath) => {
 export const uploadCsvFile = async (req, res) => {
   try {
     console.log("START");
-    const csvFilePath = path.join(__dirname, "..", "upload", req.file.filename);
+    const actualPath = path.dirname(new URL(import.meta.url).pathname);
+    const correctedPath = path.resolve(
+      actualPath.startsWith("/") ? actualPath.slice(1) : actualPath
+    );
+    const csvFilePath = path.join(
+      correctedPath,
+      "..",
+      "upload",
+      req.file.filename
+    );
     const data = await formateCsvFile(csvFilePath);
     res.status(200).json(data);
   } catch (error) {
