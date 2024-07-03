@@ -2,7 +2,8 @@
 
 Você foi designado para desenvolver uma aplicação full stack para lidar com grandes volumes de dados. A aplicação consistirá em um frontend usando Vite ou Next.js, se comunicando com um backend que pode ser construído utilizando HTTP ou WebSocket para troca de dados. O backend será responsável por fornecer uma massa de dados considerável (cerca de 30GB). Além disso, a aplicação deve ser capaz de lidar com dados fornecidos em um formato CSV mal formatado.
 
-*Observação Importante:*
+_Observação Importante:_
+
 1. Pedimos extremo comprometimento com o teste, e utilizamos IA para validar se os testes foram gerados por alguma IA (ChatGPT, LhamaGPT, Bard, Jasper, entre outras). Sua dedicação será crucial para uma avaliação justa.
 2. Pedimos que clonem o repo ou façam um fork para o github pessoal e nos sinalizem quando finalizarem, pois não será possível abrir PR neste repositório do teste.
 
@@ -19,7 +20,7 @@ Você foi designado para desenvolver uma aplicação full stack para lidar com g
 ## Validação de CPF ou CNPJ
 
 - Implementaremos uma função para validar o campo nrCpfCnpj e verificar se ele é um CPF ou CNPJ válido, seguindo as regras de validação apropriadas para cada formato.
-- Parte de todos os CPF e CNPJ sao invalidos, usamos um script para gerar dados fictícios. 
+- Parte de todos os CPF e CNPJ sao invalidos, usamos um script para gerar dados fictícios.
 
 ## Validação de Valor Total e Prestações
 
@@ -34,84 +35,105 @@ Você foi designado para desenvolver uma aplicação full stack para lidar com g
 
 ## Frontend
 
-1. *Framework Frontend:*
+1. _Framework Frontend:_
+
    - Escolha entre Vite ou Next.js para desenvolver o frontend.
 
-2. *Comunicação com Backend:*
+2. _Comunicação com Backend:_
+
    - Implemente a comunicação entre o frontend e o backend utilizando métodos assíncronos (HTTP ou WebSocket).
 
-3. *Tratativa de Leitura de Dados em Larga Escala:*
+3. _Tratativa de Leitura de Dados em Larga Escala:_
+
    - Implemente tratativas eficientes para a leitura de grandes volumes de dados.
    - Considere estratégias como paginação, carregamento sob demanda ou outras técnicas para otimizar o desempenho.
 
-4. *Gerenciador de Estados:*
+4. _Gerenciador de Estados:_
+
    - Utilize um gerenciador de estados (Redux, Zustand, Mobx, etc.) para gerenciar o estado da aplicação.
 
-5. *Manipulação de Dados:*
+5. _Manipulação de Dados:_
+
    - Implemente lógica para manipular os dados recebidos do backend.
    - Considere ordenação, filtragem e outras operações relevantes.
 
-6. *Frontend com Massa de Dados:*
+6. _Frontend com Massa de Dados:_
+
    - Desenvolva a interface do usuário para renderizar grandes volumes de dados de forma eficiente.
 
-7. *Gerenciador de Estado:*
+7. _Gerenciador de Estado:_
+
    - Utilize um gerenciador de estados para compartilhar dados e querys.
 
-8. *Opcional - GraphQL:*
+8. _Opcional - GraphQL:_
    - Implemente uma camada opcional de GraphQL como BFF (Backend For Frontend).
 
 ## Backend
 
-1. *Escolha de Framework:*
+1. _Escolha de Framework:_
+
    - Escolha um framework (Express, NestJS ou HTTP nativo) para desenvolver o backend.
 
-2. *Comunicação com Frontend:*
+2. _Comunicação com Frontend:_
+
    - Implemente endpoints HTTP ou WebSocket para fornecer dados ao frontend.
 
-3. *Tratativa de Leitura de Dados em Larga Escala:*
+3. _Tratativa de Leitura de Dados em Larga Escala:_
+
    - Implemente tratativas eficientes para a leitura e fornecimento de grandes volumes de dados.
 
-4. *Arquitetura - Opcional:*
+4. _Arquitetura - Opcional:_
+
    - Implemente a arquitetura hexagonal ou DDD.
 
-5. *Banco de Dados:*
+5. _Banco de Dados:_
+
    - Utilize MongoDB ou PostgreSQL como banco de dados.
    - Utilize Prisma ou Mongoose como ORM.
 
-6. *Tratamento de CSV:*
+6. _Tratamento de CSV:_
    - Implemente uma lógica para ler, tratar e manipular dados provenientes de um CSV mal formatado.
 
 ## Opcionais (Pontos Extras)
 
-1. *Conhecimento em Flatbuffer:*
+1. _Conhecimento em Flatbuffer:_
+
    - Demonstre conhecimento em Flatbuffer para otimizar a serialização e desserialização de dados.
 
-2. *Testes Unitários e Automatizados:*
+2. _Testes Unitários e Automatizados:_
+
    - Implemente testes unitários para o frontend e o backend.
    - Utilize ferramentas como Jest, Testing Library, Mocha, etc.
 
-3. *Conteinerização:*
+3. _Conteinerização:_
+
    - Utilize Docker para conteinerizar a aplicação.
 
-4. *Orquestração de Containers:*
+4. _Orquestração de Containers:_
+
    - Utilize Kubernetes para orquestrar os containers.
 
-5. *Integração Contínua:*
+5. _Integração Contínua:_
+
    - Configure integração contínua com Jenkins.
 
-6. *Typescript:*
+6. _Typescript:_
+
    - Utilize TypeScript para aumentar a segurança e clareza do código.
 
-7. *N8n:*
+7. _N8n:_
+
    - Integre o N8n para automação de fluxos de trabalho.
 
-8. *API Gateway:*
+8. _API Gateway:_
+
    - Configure um API Gateway para gerenciar a comunicação entre frontend e backend.
 
-9. *Banco de Dados NoSQL - Opcional:*
+9. _Banco de Dados NoSQL - Opcional:_
+
    - Utilize Neo4j ou Cassandra como banco de dados NoSQL.
 
-10. *Tenha conhecimento em Neo4j em geral*
+10. _Tenha conhecimento em Neo4j em geral_
 
 ---
 
