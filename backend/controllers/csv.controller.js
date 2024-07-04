@@ -2,6 +2,7 @@ import csvFileData from "../models/csv.model.js";
 import fs from "fs";
 import csvParser from "csv-parser";
 import path from "path";
+import { formatDate } from "../utils/csv.utils.js";
 
 const parseCsv = (csvFilePath) => {
   const results = [];
@@ -51,8 +52,8 @@ const formateCsvFile = async (csvFilePath) => {
       vlIof: parseFloat(item.vlIof),
       vlDescon: parseFloat(item.vlDescon),
       vlAtual: parseFloat(item.vlAtual),
-      dtContrato: item.dtContrato,
-      dtVctPre: item.dtVctPre,
+      dtContrato: formatDate(item.dtContrato),
+      dtVctPre: formatDate(item.dtVctPre),
     };
     formattedCsvFiles.push(formattedCsvFile);
   }
