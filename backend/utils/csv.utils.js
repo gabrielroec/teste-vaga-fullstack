@@ -13,7 +13,8 @@ export const formatCpfCnpj = (nrCpfCnpj) => {
   } else if (clear.length === 14) {
     return formatCnpj(clear);
   } else {
-    return nrCpfCnpj;
+    const cpfCnpjDesconhecido = `${nrCpfCnpj} - Cpf ou Cnpf desconhecido ou em formato inválido`;
+    return cpfCnpjDesconhecido;
   }
 };
 
