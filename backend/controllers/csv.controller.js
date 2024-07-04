@@ -26,7 +26,33 @@ const formateCsvFile = async (csvFilePath) => {
 
   for (const item of csvData) {
     const formattedCsvFile = {
+      nrInst: item.nrInst,
+      nrAgencia: item.nrAgencia,
+      cdClient: item.cdClient,
+      nmClient: item.nmClient,
+      nrCpfCnpj: item.nrCpfCnpj,
+      nrContrato: item.nrContrato,
+      dtContrato: item.dtContrato,
+      qtPrestacoes: item.qtPrestacoes,
       vlTotal: item.vlTotal,
+      cdProduto: item.cdProduto,
+      dsProduto: item.dsProduto,
+      cdCarteira: item.cdCarteira,
+      dsCarteira: item.dsCarteira,
+      nrProposta: item.nrProposta,
+      nrPresta: item.nrPresta,
+      tpPresta: item.tpPresta,
+      nrSeqPre: item.nrSeqPre,
+      dtVctPre: item.dtVctPre,
+      vlPresta: item.vlPresta,
+      vlMora: item.vlMora,
+      vlMulta: item.vlMulta,
+      vlOutAcr: item.vlOutAcr,
+      vlIof: item.vlIof,
+      vlDescon: item.vlDescon,
+      vlAtual: item.vlAtual,
+      idSituac: item.idSituac,
+      idSitVen: item.idSitVen,
     };
     formattedCsvFiles.push(formattedCsvFile);
   }
