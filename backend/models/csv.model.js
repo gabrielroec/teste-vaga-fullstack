@@ -28,6 +28,7 @@ const csvShema = new mongoose.Schema({
   vlAtual: Number,
   idSituac: String,
   idSitVen: String,
+  expectedPresta: String,
 });
 
 const csvFileData = mongoose.model("csvFileData", csvShema);

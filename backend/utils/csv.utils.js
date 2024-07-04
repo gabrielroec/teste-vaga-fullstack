@@ -28,3 +28,27 @@ export const formatDate = (date) => {
   }
   return null;
 };
+
+export const calculateTaxs = (dtVctPre, vlPresta, vlMora, vlMulta) => {
+  const dueDate = formatDate(dtVctPre);
+  const paymentDate = dueDate;
+  console.log("Data de Vencimento:", dueDate);
+  console.log("Data de Pagamento assumida como padrão:", paymentDate);
+
+  return parseFloat(vlPresta).toFixed(2);
+};
+
+export const installmentsConsistencyValidation = (
+  vlTotal,
+  qtPrestacoes,
+  vlTotalWithTaxs
+) => {
+  const expectedValue = parseFloat((vlTotal / qtPrestacoes).toFixed(2));
+  const realPresta = parseFloat(vlTotalWithTaxs).toFixed(2);
+
+  if (expectedValue === realPresta) {
+    return `${expectedValue} Consistente`;
+  } else {
+    return `${expectedValue} Não Consistente`;
+  }
+};

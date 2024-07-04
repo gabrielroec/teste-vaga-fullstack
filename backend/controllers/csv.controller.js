@@ -2,7 +2,12 @@ import csvFileData from "../models/csv.model.js";
 import fs from "fs";
 import csvParser from "csv-parser";
 import path from "path";
-import { formatDate, formatCpfCnpj } from "../utils/csv.utils.js";
+import {
+  formatDate,
+  formatCpfCnpj,
+  installmentsConsistencyValidation,
+  calculateTaxs,
+} from "../utils/csv.utils.js";
 
 const parseCsv = (csvFilePath) => {
   const results = [];
@@ -26,6 +31,17 @@ const formateCsvFile = async (csvFilePath) => {
   const formattedCsvFiles = [];
 
   for (const item of csvData) {
+    const vlTotalWithTaxs = calculateTaxs(
+      item.dtVctPre,
+      parseFloat(item.vlPresta),
+      parseFloat(item.vlMora),
+      parseFloat(item.vlMulta)
+    );
+    const expectedPresta = installmentsConsistencyValidation(
+      item.vlTotal,
+      item.qtPrestacoes,
+      vlTotalWithTaxs
+    );
     const formattedCsvFile = {
       nrInst: item.nrInst,
       nrAgencia: item.nrAgencia,
@@ -44,14 +60,15 @@ const formateCsvFile = async (csvFilePath) => {
       nrPresta: item.nrPresta,
       tpPresta: item.tpPresta,
       nrSeqPre: item.nrSeqPre,
-      vlTotal: parseFloat(item.vlTotal),
-      vlPresta: parseFloat(item.vlPresta),
-      vlMora: parseFloat(item.vlMora),
-      vlMulta: parseFloat(item.vlMulta),
-      vlOutAcr: parseFloat(item.vlOutAcr),
-      vlIof: parseFloat(item.vlIof),
-      vlDescon: parseFloat(item.vlDescon),
-      vlAtual: parseFloat(item.vlAtual),
+      vlTotal: parseFloat(item.vlTotal).toFixed(2),
+      vlPresta: parseFloat(item.vlPresta).toFixed(2),
+      vlMora: parseFloat(item.vlMora).toFixed(2),
+      vlMulta: parseFloat(item.vlMulta).toFixed(2),
+      vlOutAcr: parseFloat(item.vlOutAcr).toFixed(2),
+      vlIof: parseFloat(item.vlIof).toFixed(2),
+      vlDescon: parseFloat(item.vlDescon).toFixed(2),
+      vlAtual: parseFloat(item.vlAtual).toFixed(2),
+      expectedPresta,
       dtContrato: formatDate(item.dtContrato),
       dtVctPre: formatDate(item.dtVctPre),
     };
