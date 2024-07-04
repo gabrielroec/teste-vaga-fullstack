@@ -6,7 +6,7 @@ import {
   formatDate,
   formatCpfCnpj,
   installmentsConsistencyValidation,
-  calculateTaxs,
+  calculateTax,
 } from "../utils/csv.utils.js";
 
 const parseCsv = (csvFilePath) => {
@@ -31,7 +31,7 @@ const formateCsvFile = async (csvFilePath) => {
   const formattedCsvFiles = [];
 
   for (const item of csvData) {
-    const vlTotalWithTaxs = calculateTaxs(
+    const vlTotalWithTaxs = calculateTax(
       item.dtVctPre,
       parseFloat(item.vlPresta),
       parseFloat(item.vlMora),

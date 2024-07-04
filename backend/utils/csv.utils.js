@@ -29,7 +29,7 @@ export const formatDate = (date) => {
   return null;
 };
 
-export const calculateTaxs = (dtVctPre, vlPresta, vlMora, vlMulta) => {
+export const calculateTax = (dtVctPre, vlPresta, vlMora, vlMulta) => {
   const dueDate = formatDate(dtVctPre);
   const paymentDate = dueDate;
   console.log("Data de Vencimento:", dueDate);
