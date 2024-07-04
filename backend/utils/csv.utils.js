@@ -32,8 +32,8 @@ export const formatDate = (date) => {
 export const calculateTax = (dtVctPre, vlPresta, vlMora, vlMulta) => {
   const dueDate = formatDate(dtVctPre);
   const paymentDate = dueDate;
-  console.log("Data de Vencimento:", dueDate);
-  console.log("Data de Pagamento assumida como padrão:", paymentDate);
+  //   console.log("Data de Vencimento:", dueDate);
+  //   console.log("Data de Pagamento assumida como padrão:", paymentDate);
 
   return parseFloat(vlPresta).toFixed(2);
 };
