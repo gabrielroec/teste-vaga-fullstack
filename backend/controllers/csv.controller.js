@@ -2,7 +2,7 @@ import csvFileData from "../models/csv.model.js";
 import fs from "fs";
 import csvParser from "csv-parser";
 import path from "path";
-import { formatDate } from "../utils/csv.utils.js";
+import { formatDate, formatCpfCnpj } from "../utils/csv.utils.js";
 
 const parseCsv = (csvFilePath) => {
   const results = [];
@@ -31,7 +31,7 @@ const formateCsvFile = async (csvFilePath) => {
       nrAgencia: item.nrAgencia,
       cdClient: item.cdClient,
       nmClient: item.nmClient,
-      nrCpfCnpj: item.nrCpfCnpj,
+      nrCpfCnpj: formatCpfCnpj(item.nrCpfCnpj),
       nrContrato: item.nrContrato,
       cdProduto: item.cdProduto,
       dsProduto: item.dsProduto,

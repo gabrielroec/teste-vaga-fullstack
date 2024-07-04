@@ -1,3 +1,22 @@
+const formatCpf = (cpf) => {
+  return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+};
+
+const formatCnpj = (cnpj) => {
+  return cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
+};
+
+export const formatCpfCnpj = (nrCpfCnpj) => {
+  const clear = nrCpfCnpj.replace(/\D/g, "");
+  if (clear.length === 11) {
+    return formatCpf(clear);
+  } else if (clear.length === 14) {
+    return formatCnpj(clear);
+  } else {
+    return nrCpfCnpj;
+  }
+};
+
 export const formatDate = (date) => {
   if (/^\d{8}$/.test(date)) {
     const year = parseInt(date.substring(0, 4), 10);
