@@ -27,14 +27,15 @@ export const uploadCsv = (file: File) => async (dispatch: AppDispatch) => {
     const formData = new FormData();
     formData.append("file", file);
 
-    const response = await api.post("/api/upload", formData, {
+    const request = await api.post("/api/upload", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
 
-    dispatch(fetchCsvDataSuccess(response.data));
+    dispatch(fetchCsvDataSuccess(request.data));
   } catch (error: any) {
     dispatch(fetchCsvDataFailure(error.message));
+    throw error;
   }
 };

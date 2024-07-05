@@ -32,7 +32,6 @@ export const formatDate = (date) => {
 export const calculateTax = (dtVctPre, vlPresta, vlMora, vlMulta) => {
   const dueDate = formatDate(dtVctPre);
   const paymentDate = dueDate;
-
   return parseFloat(vlPresta).toFixed(2);
 };
 

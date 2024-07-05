@@ -104,9 +104,19 @@ export const uploadCsvFile = async (req, res) => {
 
 export const getData = async (req, res) => {
   try {
-    const data = await csvFileData.find();
-    console.log("Data fetched:", data);
-    res.json(data);
+    const page = parseInt(req.query.page, 10) || 1;
+    const limit = parseInt(req.query.limit, 10) || 10;
+    const skip = (page - 1) * limit;
+
+    const data = await csvFileData.find().skip(skip).limit(limit);
+    const total = await csvFileData.countDocuments();
+
+    res.json({
+      data,
+      total,
+      page,
+      pages: Math.ceil(total / limit),
+    });
   } catch (error) {
     res.status(500).json({ message: "Erro ao buscar dados" });
   }

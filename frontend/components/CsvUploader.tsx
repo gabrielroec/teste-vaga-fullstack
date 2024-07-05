@@ -13,16 +13,16 @@ const UploadCsv: FC = () => {
   const [file, setFile] = useState<File | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [messageT, setMessageT] = useState<string | null>(null);
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [variant, setVariant] = useState<string | null>("");
-  const [show, setShow] = useState<string | null>("none");
+  const [variant, setVariant] = useState<string>("destructive");
+  const [show, setShow] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(0);
   const dispatch = useDispatch<AppDispatch>();
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       setFile(event.target.files[0]);
+      setShow(false);
     }
   };
 
@@ -32,14 +32,13 @@ const UploadCsv: FC = () => {
       setVariant("destructive");
       setMessageT("Algo deu errado.");
       setMessage("Certifique-se de que enviou o arquivo correto.");
-      setShow("block");
+      setShow(true);
       return;
     }
 
     setIsLoading(true);
-    setMessageT(null);
     setMessage(null);
-    setVariant(null);
+    setMessageT(null);
     setProgress(0);
 
     try {
@@ -48,15 +47,18 @@ const UploadCsv: FC = () => {
       dispatch(fetchCsvData(1, 50));
       setProgress(100);
       setVariant("");
-      setShow("block");
       setMessageT("Arquivo enviado com sucesso!");
       setMessage(
         "Seu arquivo foi enviado com sucesso e está sendo processado na tabela abaixo."
       );
     } catch (error) {
       console.error(error);
+      setVariant("destructive");
+      setMessageT("Erro ao enviar arquivo.");
+      setMessage("Falha ao enviar arquivo. Por favor, tente novamente.");
     } finally {
       setIsLoading(false);
+      setShow(true);
     }
   };
 
@@ -64,8 +66,7 @@ const UploadCsv: FC = () => {
     <div>
       <form
         onSubmit={handleSubmit}
-        className="flex items-end gap-2 justify-center
-        my-20"
+        className="flex items-end gap-2 justify-center my-20"
       >
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label htmlFor="csvFile">Selecione o seu arquivo Csv</Label>
@@ -80,12 +81,9 @@ const UploadCsv: FC = () => {
         />
       )}
 
-      {message && (
-        <Alert
-          variant={variant}
-          className={`w-[50%] m-auto relative -top-10 ${show}`}
-        >
-          <AlertCircle className="h-4 w-4" />
+      {show && (
+        <Alert variant={variant} className="w-[50%] m-auto relative -top-10">
+          <Terminal className="h-4 w-4" />
           <AlertTitle>{messageT}</AlertTitle>
           <AlertDescription>{message}</AlertDescription>
         </Alert>
