@@ -6,7 +6,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertCircle, Terminal } from "lucide-react";
+import { Terminal } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 
 const UploadCsv: FC = () => {
@@ -14,7 +14,7 @@ const UploadCsv: FC = () => {
   const [message, setMessage] = useState<string | null>(null);
   const [messageT, setMessageT] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [variant, setVariant] = useState<string>("destructive");
+  const [variant, setVariant] = useState<string>("");
   const [show, setShow] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(0);
   const dispatch = useDispatch<AppDispatch>();
@@ -40,6 +40,12 @@ const UploadCsv: FC = () => {
     setMessage(null);
     setMessageT(null);
     setProgress(0);
+    setTimeout(() => {
+      setProgress(33);
+      setTimeout(() => {
+        setProgress(70);
+      }, 1000);
+    }, 1000);
 
     try {
       await dispatch(uploadCsv(file));
@@ -53,11 +59,13 @@ const UploadCsv: FC = () => {
       );
     } catch (error) {
       console.error(error);
-      setVariant("destructive");
-      setMessageT("Erro ao enviar arquivo.");
-      setMessage("Falha ao enviar arquivo. Por favor, tente novamente.");
     } finally {
-      setIsLoading(false);
+      setTimeout(() => {
+        setProgress(100);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
+      }, 1000);
       setShow(true);
     }
   };
