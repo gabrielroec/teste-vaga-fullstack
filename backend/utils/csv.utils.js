@@ -1,3 +1,12 @@
+export const formatCurrency = (value) => {
+  const formatter = new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
+
+  return formatter.format(value);
+};
+
 const formatCpf = (cpf) => {
   return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
 };
@@ -44,8 +53,8 @@ export const installmentsConsistencyValidation = (
   const realPresta = parseFloat(vlTotalWithTaxs).toFixed(2);
 
   if (expectedValue === realPresta) {
-    return `${expectedValue} Consistente`;
+    return `${formatCurrency(expectedValue)} Consistente`;
   } else {
-    return `${expectedValue} Não Consistente`;
+    return `${formatCurrency(expectedValue)} Não Consistente`;
   }
 };
