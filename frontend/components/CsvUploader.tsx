@@ -42,7 +42,7 @@ const UploadCsv: FC = () => {
       >
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label htmlFor="csvFile">Selecione o seu arquivo Csv</Label>
-          <Input id="csvFile" type="file" />
+          <Input id="csvFile" type="file" onChange={handleFileChange} />
         </div>
         <Button variant="secondary">Enviar</Button>
       </form>
