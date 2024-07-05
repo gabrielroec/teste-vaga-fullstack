@@ -32,7 +32,7 @@ export const Pagination: React.FC<PaginationProps> = ({
   const paginationItems = getPaginationItems();
 
   return (
-    <div className="flex items-center justify-center space-x-2 mt-10">
+    <div className="flex items-center justify-center space-x-2 my-10">
       <button
         className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
         onClick={() => onPageChange(Math.max(1, currentPage - 1))}
