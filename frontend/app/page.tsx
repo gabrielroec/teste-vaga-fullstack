@@ -1,6 +1,11 @@
 "use client";
 
+import UploadCsv from "@/components/CsvUploader";
 const Page = () => {
-  return <div>Hello, world</div>;
+  return (
+    <div>
+      <UploadCsv />
+    </div>
+  );
 };
 export default Page;
