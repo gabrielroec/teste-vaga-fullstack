@@ -7,75 +7,189 @@ interface CsvTableProps {
 const CsvTable: FC<CsvTableProps> = ({ data }) => {
   const tableRows = () => {
     return data.map((item, index) => (
-      <tr key={index}>
-        <td>{item.nrInst}</td>
-        <td>{item.nrAgencia}</td>
-        <td>{item.cdClient}</td>
-        <td>{item.nmClient}</td>
-        <td>{item.nrCpfCnpj}</td>
-        <td>{item.nrContrato}</td>
-        <td>{item.cdProduto}</td>
-        <td>{item.dsProduto}</td>
-        <td>{item.cdCarteira}</td>
-        <td>{item.dsCarteira}</td>
-        <td>{item.nrProposta}</td>
-        <td>{item.idSituac}</td>
-        <td>{item.idSitVen}</td>
-        <td>{item.qtPrestacoes}</td>
-        <td>{item.nrPresta}</td>
-        <td>{item.tpPresta}</td>
-        <td>{item.nrSeqPre}</td>
-        <td>{item.vlTotal}</td>
-        <td>{item.vlPresta}</td>
-        <td>{item.vlMora}</td>
-        <td>{item.vlMulta}</td>
-        <td>{item.vlOutAcr}</td>
-        <td>{item.vlIof}</td>
-        <td>{item.vlDescon}</td>
-        <td>{item.vlAtual}</td>
-        <td>{item.expectedPresta}</td>
-        <td>{item.dtContrato}</td>
-        <td>{item.dtVctPre}</td>
+      <tr key={index} className="hover:bg-gray-100">
+        <td className="px-3 text-center py-2 border-b border-gray-200 text-xs">
+          {item.nrInst}
+        </td>
+        <td className="px-3 text-center py-2 border-b border-gray-200 text-xs">
+          {item.nrAgencia}
+        </td>
+        <td className="px-3 text-center py-2 border-b border-gray-200 text-xs">
+          {item.cdClient}
+        </td>
+        <td className="px-3 text-center py-2 border-b border-gray-200 text-xs">
+          {item.nmClient}
+        </td>
+        <td className="px-3 text-center py-2 border-b border-gray-200 text-xs">
+          {item.nrCpfCnpj}
+        </td>
+        <td className="px-3 text-center py-2 border-b border-gray-200 text-xs">
+          {item.nrContrato}
+        </td>
+        <td className="px-3 text-center py-2 border-b border-gray-200 text-xs">
+          {item.cdProduto}
+        </td>
+        <td className="px-3 text-center py-2 border-b border-gray-200 text-xs">
+          {item.dsProduto}
+        </td>
+        <td className="px-3 text-center py-2 border-b border-gray-200 text-xs">
+          {item.cdCarteira}
+        </td>
+        <td className="px-3 text-center py-2 border-b border-gray-200 text-xs">
+          {item.dsCarteira}
+        </td>
+        <td className="px-3 text-center py-2 border-b border-gray-200 text-xs">
+          {item.nrProposta}
+        </td>
+        <td className="px-3 text-center py-2 border-b border-gray-200 text-xs">
+          {item.idSituac}
+        </td>
+        <td className="px-3 text-center py-2 border-b border-gray-200 text-xs">
+          {item.idSitVen}
+        </td>
+        <td className="px-3 text-center py-2 border-b border-gray-200 text-xs">
+          {item.qtPrestacoes}
+        </td>
+        <td className="px-3 text-center py-2 border-b border-gray-200 text-xs">
+          {item.nrPresta}
+        </td>
+        <td className="px-3 text-center py-2 border-b border-gray-200 text-xs">
+          {item.tpPresta}
+        </td>
+        <td className="px-3 text-center py-2 border-b border-gray-200 text-xs">
+          {item.nrSeqPre}
+        </td>
+        <td className="px-3 text-center py-2 border-b border-gray-200 text-xs">
+          {item.vlTotal}
+        </td>
+        <td className="px-3 text-center py-2 border-b border-gray-200 text-xs">
+          {item.vlPresta}
+        </td>
+        <td className="px-3 text-center py-2 border-b border-gray-200 text-xs">
+          {item.vlMora}
+        </td>
+        <td className="px-3 text-center py-2 border-b border-gray-200 text-xs">
+          {item.vlMulta}
+        </td>
+        <td className="px-3 text-center py-2 border-b border-gray-200 text-xs">
+          {item.vlOutAcr}
+        </td>
+        <td className="px-3 text-center py-2 border-b border-gray-200 text-xs">
+          {item.vlIof}
+        </td>
+        <td className="px-3 text-center py-2 border-b border-gray-200 text-xs">
+          {item.vlDescon}
+        </td>
+        <td className="px-3 text-center py-2 border-b border-gray-200 text-xs">
+          {item.vlAtual}
+        </td>
+        <td className="px-3 text-center py-2 border-b border-gray-200 text-xs">
+          {item.expectedPresta}
+        </td>
+        <td className="px-3 text-center py-2 border-b border-gray-200 text-xs">
+          {item.dtContrato}
+        </td>
+        <td className="px-3 text-center py-2 border-b border-gray-200 text-xs">
+          {item.dtVctPre}
+        </td>
       </tr>
     ));
   };
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Nr Inst</th>
-          <th>Nr Agência</th>
-          <th>Cd Cliente</th>
-          <th>Nome Cliente</th>
-          <th>CPF/CNPJ</th>
-          <th>Nr Contrato</th>
-          <th>Cd Produto</th>
-          <th>Ds Produto</th>
-          <th>Cd Carteira</th>
-          <th>Ds Carteira</th>
-          <th>Nr Proposta</th>
-          <th>Id Situação</th>
-          <th>Id Situação Venda</th>
-          <th>Qtde Prestações</th>
-          <th>Nr Prestação</th>
-          <th>Tipo Prestação</th>
-          <th>Nr Seq Prestação</th>
-          <th>Valor Total</th>
-          <th>Valor Prestação</th>
-          <th>Valor Mora</th>
-          <th>Valor Multa</th>
-          <th>Valor Outros Acréscimos</th>
-          <th>Valor IOF</th>
-          <th>Valor Desconto</th>
-          <th>Valor Atual</th>
-          <th>Prestação Esperada</th>
-          <th>Data Contrato</th>
-          <th>Data Vencimento Prestação</th>
-        </tr>
-      </thead>
-      <tbody>{tableRows()}</tbody>
-    </table>
+    <div className="overflow-x-auto">
+      <table className="min-w-full leading-normal shadow-md rounded-lg overflow-hidden mt-10">
+        <thead className="bg-gray-100 p-4 ">
+          <tr>
+            <th className="px-3 text-center py-3 border-b-2 border-gray-200 text-gray-800 text-left text-xs uppercase font-normal font-bold">
+              Nr Inst
+            </th>
+            <th className="px-3 text-center py-3 border-b-2 border-gray-200 text-gray-800 text-left text-xs uppercase font-normal font-bold">
+              Nr Agência
+            </th>
+            <th className="px-3 text-center py-3 border-b-2 border-gray-200 text-gray-800 text-left text-xs uppercase font-normal font-bold">
+              Cd Cliente
+            </th>
+            <th className="px-3 text-center py-3 border-b-2 border-gray-200 text-gray-800 text-left text-xs uppercase font-normal font-bold">
+              Nome Cliente
+            </th>
+            <th className="px-3 text-center py-3 border-b-2 border-gray-200 text-gray-800 text-left text-xs uppercase font-normal font-bold">
+              CPF/CNPJ
+            </th>
+            <th className="px-3 text-center py-3 border-b-2 border-gray-200 text-gray-800 text-left text-xs uppercase font-normal font-bold">
+              Nr Contrato
+            </th>
+            <th className="px-3 text-center py-3 border-b-2 border-gray-200 text-gray-800 text-left text-xs uppercase font-normal font-bold">
+              Cd Produto
+            </th>
+            <th className="px-3 text-center py-3 border-b-2 border-gray-200 text-gray-800 text-left text-xs uppercase font-normal font-bold">
+              Ds Produto
+            </th>
+            <th className="px-3 text-center py-3 border-b-2 border-gray-200 text-gray-800 text-left text-xs uppercase font-normal font-bold">
+              Cd Carteira
+            </th>
+            <th className="px-3 text-center py-3 border-b-2 border-gray-200 text-gray-800 text-left text-xs uppercase font-normal font-bold">
+              Ds Carteira
+            </th>
+            <th className="px-3 text-center py-3 border-b-2 border-gray-200 text-gray-800 text-left text-xs uppercase font-normal font-bold">
+              Nr Proposta
+            </th>
+            <th className="px-3 text-center py-3 border-b-2 border-gray-200 text-gray-800 text-left text-xs uppercase font-normal font-bold">
+              Id Situação
+            </th>
+            <th className="px-3 text-center py-3 border-b-2 border-gray-200 text-gray-800 text-left text-xs uppercase font-normal font-bold">
+              Id Situação Venda
+            </th>
+            <th className="px-3 text-center py-3 border-b-2 border-gray-200 text-gray-800 text-left text-xs uppercase font-normal font-bold">
+              Qtde Prestações
+            </th>
+            <th className="px-3 text-center py-3 border-b-2 border-gray-200 text-gray-800 text-left text-xs uppercase font-normal font-bold">
+              Nr Prestação
+            </th>
+            <th className="px-3 text-center py-3 border-b-2 border-gray-200 text-gray-800 text-left text-xs uppercase font-normal font-bold">
+              Tipo Prestação
+            </th>
+            <th className="px-3 text-center py-3 border-b-2 border-gray-200 text-gray-800 text-left text-xs uppercase font-normal font-bold">
+              Nr Seq Prestação
+            </th>
+            <th className="px-3 text-center py-3 border-b-2 border-gray-200 text-gray-800 text-left text-xs uppercase font-normal font-bold">
+              Valor Total
+            </th>
+            <th className="px-3 text-center py-3 border-b-2 border-gray-200 text-gray-800 text-left text-xs uppercase font-normal font-bold">
+              Valor Prestação
+            </th>
+            <th className="px-3 text-center py-3 border-b-2 border-gray-200 text-gray-800 text-left text-xs uppercase font-normal font-bold">
+              Valor Mora
+            </th>
+            <th className="px-3 text-center py-3 border-b-2 border-gray-200 text-gray-800 text-left text-xs uppercase font-normal font-bold">
+              Valor Multa
+            </th>
+            <th className="px-3 text-center py-3 border-b-2 border-gray-200 text-gray-800 text-left text-xs uppercase font-normal font-bold">
+              Valor Outros Acréscimos
+            </th>
+            <th className="px-3 text-center py-3 border-b-2 border-gray-200 text-gray-800 text-left text-xs uppercase font-normal font-bold">
+              Valor IOF
+            </th>
+            <th className="px-3 text-center py-3 border-b-2 border-gray-200 text-gray-800 text-left text-xs uppercase font-normal font-bold">
+              Valor Desconto
+            </th>
+            <th className="px-3 text-center py-3 border-b-2 border-gray-200 text-gray-800 text-left text-xs uppercase font-normal font-bold">
+              Valor Atual
+            </th>
+            <th className="px-3 text-center py-3 border-b-2 border-gray-200 text-gray-800 text-left text-xs uppercase font-normal font-bold">
+              Prestação Esperada
+            </th>
+            <th className="px-3 text-center py-3 border-b-2 border-gray-200 text-gray-800 text-left text-xs uppercase font-normal font-bold">
+              Data Contrato
+            </th>
+            <th className="px-3 text-center py-3 border-b-2 border-gray-200 text-gray-800 text-left text-xs uppercase font-normal font-bold">
+              Data Vencimento Prestação
+            </th>
+          </tr>
+        </thead>
+        <tbody>{tableRows()}</tbody>
+      </table>
+    </div>
   );
 };
 export default CsvTable;
