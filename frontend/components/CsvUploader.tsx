@@ -55,6 +55,8 @@ const UploadCsv: FC = () => {
       );
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
