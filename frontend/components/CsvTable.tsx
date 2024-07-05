@@ -4,9 +4,26 @@ interface CsvTableProps {
   data: any[];
 }
 
+const removeDuplicatedCsvData = (data: any[], keys: string[]) => {
+  const seen = new Set();
+  return data.filter((item) => {
+    const keyValue = keys.map((key) => item[key]).join("-");
+    if (seen.has(keyValue)) {
+      return false;
+    } else {
+      seen.add(keyValue);
+      return true;
+    }
+  });
+};
+
 const CsvTable: FC<CsvTableProps> = ({ data }) => {
+  const revisedUniquesCsvDatas = removeDuplicatedCsvData(data, [
+    "nrCpfCnpj",
+    "nrContrato",
+  ]);
   const tableRows = () => {
-    return data.map((item, index) => (
+    return revisedUniquesCsvDatas.map((item, index) => (
       <tr key={index} className="hover:bg-gray-100">
         <td className="px-3 text-center py-2 border-b border-gray-200 text-xs">
           {item.nrInst}

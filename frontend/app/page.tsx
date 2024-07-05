@@ -15,6 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
+import { Pagination } from "@/components/Pagination";
 
 const Page = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -23,7 +24,7 @@ const Page = () => {
   );
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(50);
 
   useEffect(() => {
     dispatch(fetchCsvData(currentPage, limit));
@@ -48,15 +49,21 @@ const Page = () => {
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectItem value="10">10</SelectItem>
-            <SelectItem value="20">20</SelectItem>
-            <SelectItem value="30">30</SelectItem>
+            <SelectItem value="50">10</SelectItem>
+            <SelectItem value="100">20</SelectItem>
+            <SelectItem value="143">30</SelectItem>
           </SelectGroup>
         </SelectContent>
       </Select>
       {loading && <p>Carregando</p>}
       {error && <p>Error: {error}</p>}
       {data && <CsvTable data={data} />}
+
+      <Pagination
+        currentPage={currentPage}
+        pages={pages}
+        onPageChange={handlePage}
+      />
     </div>
   );
 };
