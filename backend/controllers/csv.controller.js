@@ -101,3 +101,13 @@ export const uploadCsvFile = async (req, res) => {
     res.status(500).json({ message: "Error processing csv file" });
   }
 };
+
+export const getData = async (req, res) => {
+  try {
+    const data = await csvFileData.find();
+    console.log("Data fetched:", data);
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ message: "Erro ao buscar dados" });
+  }
+};
