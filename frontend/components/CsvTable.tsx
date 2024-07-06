@@ -75,25 +75,6 @@ const CsvTable: FC<CsvTableProps> = ({ data }) => {
     setFilteredData(result);
   }, [filters, data]);
 
-  useEffect(() => {
-    let result = data.filter((item) =>
-      Object.entries(filters).every(([key, value]) =>
-        value
-          ? item[key]?.toString().toLowerCase().includes(value.toLowerCase())
-          : true
-      )
-    );
-
-    // Adicionada lógica para filtrar pela data de contrato
-    if (date) {
-      const formattedDate = format(date, "yyyy-MM-dd");
-      result = result.filter((item) => item.dtContrato === formattedDate);
-    }
-
-    result = removeDuplicatedCsvData(result, ["nrCpfCnpj", "nrContrato"]);
-    setFilteredData(result);
-  }, [filters, date, data]);
-
   const handleFilterChange = (field: keyof FilterChooses, value: string) => {
     setFilters((prev) => ({
       ...prev,
