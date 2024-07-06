@@ -84,16 +84,12 @@ const formateCsvFile = async (csvFilePath) => {
 export const uploadCsvFile = async (req, res) => {
   try {
     console.log("START");
-    const actualPath = path.dirname(new URL(import.meta.url).pathname);
-    const correctedPath = path.resolve(
-      actualPath.startsWith("/") ? actualPath.slice(1) : actualPath
-    );
-    const csvFilePath = path.join(
-      correctedPath,
-      "..",
-      "upload",
-      req.file.filename
-    );
+
+    const actualPath = process.cwd();
+    const csvFilePath = path.join(actualPath, "upload", req.file.filename);
+
+    console.log("CSV File Path: ", csvFilePath);
+
     const data = await formateCsvFile(csvFilePath);
     res.status(200).json(data);
   } catch (error) {

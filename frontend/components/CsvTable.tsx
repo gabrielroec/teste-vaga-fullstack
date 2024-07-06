@@ -1,7 +1,39 @@
-import { FC } from "react";
+"use client";
+import * as React from "react";
+import { FC, useState, useEffect } from "react";
+import { Label } from "./ui/label";
+import { Input } from "@/components/ui/input";
+import { format } from "date-fns";
+import { Calendar as CalendarIcon } from "lucide-react";
 
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 interface CsvTableProps {
   data: any[];
+}
+
+interface FilterChooses {
+  nrInst?: string;
+  nrAgencia?: string;
+  cdClient?: string;
+  nmClient?: string;
+  nrCpfCnpj?: string;
+  nrContrato?: string;
+  cdProduto?: string;
+  dsProduto?: string;
+  cdCarteira?: string;
+  dsCarteira?: string;
+  nrProposta?: string;
+  idSituac?: string;
+  idSitVen?: string;
+  dtContrato?: string;
+  dtVctPre?: string;
 }
 
 const removeDuplicatedCsvData = (data: any[], keys: string[]) => {
@@ -27,12 +59,50 @@ const formatCurrency = (value: number) => {
 };
 
 const CsvTable: FC<CsvTableProps> = ({ data }) => {
-  const revisedUniquesCsvDatas = removeDuplicatedCsvData(data, [
-    "nrCpfCnpj",
-    "nrContrato",
-  ]);
+  const [date, setDate] = React.useState<Date>();
+  const [filters, setFilters] = useState<FilterChooses>({});
+  const [filteredData, setFilteredData] = useState(data);
+
+  useEffect(() => {
+    let result = data.filter((item) =>
+      Object.entries(filters).every(([key, value]) =>
+        value
+          ? item[key]?.toString().toLowerCase().includes(value.toLowerCase())
+          : true
+      )
+    );
+    result = removeDuplicatedCsvData(result, ["nrCpfCnpj", "nrContrato"]);
+    setFilteredData(result);
+  }, [filters, data]);
+
+  useEffect(() => {
+    let result = data.filter((item) =>
+      Object.entries(filters).every(([key, value]) =>
+        value
+          ? item[key]?.toString().toLowerCase().includes(value.toLowerCase())
+          : true
+      )
+    );
+
+    // Adicionada lógica para filtrar pela data de contrato
+    if (date) {
+      const formattedDate = format(date, "yyyy-MM-dd");
+      result = result.filter((item) => item.dtContrato === formattedDate);
+    }
+
+    result = removeDuplicatedCsvData(result, ["nrCpfCnpj", "nrContrato"]);
+    setFilteredData(result);
+  }, [filters, date, data]);
+
+  const handleFilterChange = (field: keyof FilterChooses, value: string) => {
+    setFilters((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
   const tableRows = () => {
-    return revisedUniquesCsvDatas.map((item, index) => (
+    return filteredData.map((item, index) => (
       <tr key={index} className="hover:bg-gray-100">
         <td className="px-2 text-center py-2 border-b border-gray-200 text-xs">
           {item.nrInst}
@@ -121,100 +191,143 @@ const CsvTable: FC<CsvTableProps> = ({ data }) => {
       </tr>
     ));
   };
-
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full leading-normal shadow-md rounded-lg overflow-hidden mt-10">
-        <thead className="bg-gray-100 p-4 ">
-          <tr>
-            <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800 text-xs uppercase font-bold">
-              Nr Inst
-            </th>
-            <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800 text-xs uppercase font-bold">
-              Nr Agência
-            </th>
-            <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
-              Cd Cliente
-            </th>
-            <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
-              Nome Cliente
-            </th>
-            <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
-              CPF/CNPJ
-            </th>
-            <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
-              Nr Contrato
-            </th>
-            <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
-              Cd Produto
-            </th>
-            <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
-              Ds Produto
-            </th>
-            <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
-              Cd Carteira
-            </th>
-            <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
-              Ds Carteira
-            </th>
-            <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
-              Nr Proposta
-            </th>
-            <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
-              Id Situação
-            </th>
-            <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
-              Id Situação Venda
-            </th>
-            <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
-              Qtde Prestações
-            </th>
-            <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
-              Nr Prestação
-            </th>
-            <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
-              Tipo Prestação
-            </th>
-            <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
-              Nr Seq Prestação
-            </th>
-            <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
-              Valor Total
-            </th>
-            <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
-              Valor Prestação
-            </th>
-            <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
-              Valor Mora
-            </th>
-            <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
-              Valor Multa
-            </th>
-            <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
-              Valor Outros Acréscimos
-            </th>
-            <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
-              Valor IOF
-            </th>
-            <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
-              Valor Desconto
-            </th>
-            <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
-              Valor Atual
-            </th>
-            <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
-              Prestação Esperada
-            </th>
-            <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
-              Data Contrato
-            </th>
-            <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
-              Data Vencimento Prestação
-            </th>
-          </tr>
-        </thead>
-        <tbody>{tableRows()}</tbody>
-      </table>
+    <div className="mt-10">
+      <div className="mb-4 flex flex-col gap-10">
+        <Label>Filtrar por:</Label>
+        <div className="flex items-center gap-4 ">
+          <div className="grid w-full max-w-sm items-center gap-1.5">
+            <Label>Nr Inst</Label>
+            <Input
+              type="text"
+              placeholder="Nr Inst"
+              onChange={(e) => handleFilterChange("nrInst", e.target.value)}
+              className="text-sm p-1 border rounded"
+            />
+          </div>
+
+          <div className="grid w-full max-w-sm items-center gap-1.5">
+            <Label>nrAgencia</Label>
+            <Input
+              type="text"
+              placeholder="Nr Agência"
+              onChange={(e) => handleFilterChange("nrAgencia", e.target.value)}
+              className="text-sm p-1 border rounded"
+            />
+          </div>
+
+          <div className="grid w-full max-w-sm items-center gap-1.5">
+            <Label>dtContrato</Label>
+            <input
+              type="date"
+              onChange={(e) => handleFilterChange("dtContrato", e.target.value)}
+              className="text-sm p-1 border rounded"
+            />
+          </div>
+
+          <div className="grid w-full max-w-sm items-center gap-1.5">
+            <Label>dtVctPre</Label>
+            <input
+              type="date"
+              onChange={(e) => handleFilterChange("dtVctPre", e.target.value)}
+              className="text-sm p-1 border rounded"
+            />
+          </div>
+        </div>
+      </div>
+      <div className="overflow-x-auto shadow-md mt-10">
+        <table className="min-w-full leading-normal  rounded-lg overflow-hidden ">
+          <thead className="bg-gray-100 p-4 ">
+            <tr>
+              <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800 text-xs uppercase font-bold">
+                Nr Inst
+              </th>
+              <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800 text-xs uppercase font-bold">
+                Nr Agência
+              </th>
+              <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
+                Cd Cliente
+              </th>
+              <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
+                Nome Cliente
+              </th>
+              <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
+                CPF/CNPJ
+              </th>
+              <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
+                Nr Contrato
+              </th>
+              <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
+                Cd Produto
+              </th>
+              <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
+                Ds Produto
+              </th>
+              <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
+                Cd Carteira
+              </th>
+              <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
+                Ds Carteira
+              </th>
+              <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
+                Nr Proposta
+              </th>
+              <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
+                Id Situação
+              </th>
+              <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
+                Id Situação Venda
+              </th>
+              <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
+                Qtde Prestações
+              </th>
+              <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
+                Nr Prestação
+              </th>
+              <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
+                Tipo Prestação
+              </th>
+              <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
+                Nr Seq Prestação
+              </th>
+              <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
+                Valor Total
+              </th>
+              <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
+                Valor Prestação
+              </th>
+              <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
+                Valor Mora
+              </th>
+              <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
+                Valor Multa
+              </th>
+              <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
+                Valor Outros Acréscimos
+              </th>
+              <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
+                Valor IOF
+              </th>
+              <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
+                Valor Desconto
+              </th>
+              <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
+                Valor Atual
+              </th>
+              <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
+                Prestação Esperada
+              </th>
+              <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
+                Data Contrato
+              </th>
+              <th className="px-2 text-center py-3 border-b-2 border-gray-200 text-gray-800  text-xs uppercase font-bold">
+                Data Vencimento Prestação
+              </th>
+            </tr>
+          </thead>
+          <tbody>{tableRows()}</tbody>
+        </table>
+      </div>
     </div>
   );
 };
