@@ -39,6 +39,14 @@ const Page = () => {
     setCurrentPage(1);
   };
 
+  const handleFilterChange = (hasFilters: boolean) => {
+    if (hasFilters) {
+      setLimit(total);
+    } else {
+      setLimit(50);
+    }
+  };
+
   return (
     <div className="px-10">
       <UploadCsv />
@@ -51,13 +59,23 @@ const Page = () => {
           <SelectGroup>
             <SelectItem value="50">10</SelectItem>
             <SelectItem value="100">20</SelectItem>
-            <SelectItem value="143">30</SelectItem>
+            <SelectItem value="150">30</SelectItem>
+            {total > 0 && (
+              <SelectItem value={total.toString()}>Mostrar todos</SelectItem>
+            )}
           </SelectGroup>
         </SelectContent>
       </Select>
-      {loading && <p>Carregando</p>}
+      {loading && <p>Carregando...</p>}
       {error && <p>Error: {error}</p>}
-      {data && <CsvTable data={data} />}
+      {data && (
+        <CsvTable
+          data={data}
+          setLimit={setLimit}
+          total={total}
+          onFilterChange={handleFilterChange}
+        />
+      )}
 
       <Pagination
         currentPage={currentPage}

@@ -14,8 +14,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+
 interface CsvTableProps {
   data: any[];
+  setLimit: (value: number) => void;
+  total: number;
+  onFilterChange: (hasFilters: boolean) => void;
 }
 
 interface FilterChooses {
@@ -58,8 +62,12 @@ const formatCurrency = (value: number) => {
   return formatter.format(value);
 };
 
-const CsvTable: FC<CsvTableProps> = ({ data }) => {
-  const [date, setDate] = React.useState<Date>();
+const CsvTable: FC<CsvTableProps> = ({
+  data,
+  setLimit,
+  total,
+  onFilterChange,
+}) => {
   const [filters, setFilters] = useState<FilterChooses>({});
   const [filteredData, setFilteredData] = useState(data);
 
@@ -73,7 +81,10 @@ const CsvTable: FC<CsvTableProps> = ({ data }) => {
     );
     result = removeDuplicatedCsvData(result, ["nrCpfCnpj", "nrContrato"]);
     setFilteredData(result);
-  }, [filters, data]);
+
+    const hasFilters = Object.values(filters).some((value) => value);
+    onFilterChange(hasFilters);
+  }, [filters, data, onFilterChange]);
 
   const handleFilterChange = (field: keyof FilterChooses, value: string) => {
     setFilters((prev) => ({
