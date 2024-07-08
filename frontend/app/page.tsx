@@ -10,14 +10,16 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { Pagination } from "@/components/Pagination";
+import { Progress } from "@/components/ui/progress";
 
 const Page = () => {
+  const [progress, setProgress] = useState<number>(0);
+
   const dispatch = useDispatch<AppDispatch>();
   const { data, loading, error, total, pages } = useSelector(
     (state: RootState) => state.csv
@@ -25,10 +27,23 @@ const Page = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [limit, setLimit] = useState(50);
+  const [userSetLimit, setUserSetLimit] = useState(false);
 
   useEffect(() => {
+    setProgress(0);
     dispatch(fetchCsvData(currentPage, limit));
   }, [dispatch, currentPage, limit]);
+
+  useEffect(() => {
+    if (loading) {
+      const interval = setInterval(() => {
+        setProgress((prev) => (prev < 90 ? prev + 10 : prev));
+      }, 1000);
+      return () => clearInterval(interval);
+    } else {
+      setProgress(100);
+    }
+  }, [loading]);
 
   const handlePage = (page: number) => {
     setCurrentPage(page);
@@ -36,13 +51,15 @@ const Page = () => {
 
   const handleLimit = (newValue: string | number) => {
     setLimit(parseInt(newValue as string, 10));
+    setUserSetLimit(true);
     setCurrentPage(1);
   };
 
   const handleFilterChange = (hasFilters: boolean) => {
     if (hasFilters) {
       setLimit(total);
-    } else {
+      setUserSetLimit(false);
+    } else if (!userSetLimit) {
       setLimit(50);
     }
   };
@@ -50,7 +67,7 @@ const Page = () => {
   return (
     <div className="px-10">
       <UploadCsv />
-      <Label>Items por página</Label>
+      <Label>Escolha a quantidade de itens por página</Label>
       <Select value={limit.toString()} onValueChange={handleLimit}>
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="Items per page" />
@@ -66,7 +83,11 @@ const Page = () => {
           </SelectGroup>
         </SelectContent>
       </Select>
-      {loading && <p>Carregando...</p>}
+      {loading && (
+        <div className="my-4">
+          <Progress value={progress} className="w-full" />
+        </div>
+      )}
       {error && <p>Error: {error}</p>}
       {data && (
         <CsvTable

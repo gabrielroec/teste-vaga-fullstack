@@ -4,7 +4,6 @@ import { FC, useState, useEffect } from "react";
 import { Label } from "./ui/label";
 import { Input } from "@/components/ui/input";
 import { format } from "date-fns";
-import { Calendar as CalendarIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
